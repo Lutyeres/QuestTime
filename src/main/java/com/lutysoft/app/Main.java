@@ -13,10 +13,17 @@ import java.time.LocalDateTime;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-
+         /*
         Tarefa tarefa1 = new Tarefa(LocalDateTime.now(),null,0,"estudo","estudo de programação");
         TarefaDao tarefaSalvar = new TarefaDao();
         System.out.println(tarefaSalvar.create(tarefa1));
+        */
+
+        TarefaDao tarefaId = new TarefaDao();
+        Tarefa tarefaCash = new Tarefa();
+        tarefaCash = tarefaId.getTarefaId(1);
+        System.out.println(String.format("\n Tarefa: %s \n Descrição: %s \n Inicio: %s \n Final: %s", tarefaCash.getNome(),tarefaCash.getObs(),tarefaCash.getDataHorarioInicio(),tarefaCash.getDataHorarioFinal()));
+
 
 
 
