@@ -22,12 +22,12 @@ public class TarefaDao {
     }
 
     private static final String SQL_INSERT_INICIO = "INSERT INTO tarefa(tarefaNome,tarefaObs,tarefaDataHoraInicio) values (?,?,?)";
-    private static final String SQL_UPDATE_FIM = "UPDATE tarefa SET tarefaDataHoraFinal = NOW (), taferaNome = ?, tarefaObs = ? WHERE idTarefa = ?";
+    private static final String SQL_UPDATE_FIM = "UPDATE tarefa SET tarefaDataHoraFinal = ?, taferaNome = ?, tarefaObs = ? WHERE idTarefa = ?";
     private static final String SQL_UPDATE_TAREFA = "UPDATE tarefa SET tarefaNome = ?, tarefaObs = ? WHERE idTarefa = ?  ";
     private static final String SQL_DELETE = "DELETE FROM tarefa WHERE idTarefa = ?";
     private static final String SQL_SELECT_ID = "SELECT * FROM tarefa WHERE idTarefa = ?";
     private static final String SQL_SELECT_NAME = "SELECT * FROM tarefa WHERE tarefaNome = ?";
-    private static final String SQL_SELECT_NAME_NO_FINALIZED = "SELECT * FROM tarefa tarefaNome = ? AND tarefaDataHoraFinal IS NULL";
+    private static final String SQL_SELECT_NAME_NO_FINALIZED = "SELECT * FROM tarefa WHERE tarefaNome = ? AND tarefaDataHoraFinal IS NULL";
 
     //Metodo que vai decidir se vai salvar ou atualizar a tarefa
     public String create(Tarefa tarefa) {
@@ -38,7 +38,7 @@ public class TarefaDao {
     private String add(Tarefa tarefa){
         Tarefa tarefaTest = getTarefaNoFinalized(tarefa.getNome());
         if(tarefaTest != null){
-            return String.format("ERROR: A tarefa %s não foi finalizada, para adicionar um tarefa semelhante finalize a tarefa primeiro");
+            return String.format("ERROR: A tarefa %s não foi finalizada, para adicionar um tarefa semelhante finalize a tarefa primeiro", tarefaTest.getNome());
         }
 
 
@@ -65,9 +65,10 @@ public class TarefaDao {
 
             try(Connection con = conexao.getConnection(); PreparedStatement stmt = con.prepareStatement(SQL_UPDATE_FIM)){
 
-                stmt.setString(1, tarefa.getNome());
-                stmt.setString(2, tarefa.getObs());
-                stmt.setInt(3, tarefa.getId());
+                stmt.setObject(1, tarefa.getDataHorarioFinal());
+                stmt.setString(2, tarefa.getNome());
+                stmt.setString(3, tarefa.getObs());
+                stmt.setInt(4, tarefa.getId());
 
                 int resultado = stmt.executeUpdate();
                 return resultado == 1 ? "Tarefa alterada com sucesso!" : "Não foi possível alterar a tarefa";
@@ -159,7 +160,7 @@ public class TarefaDao {
     }
 
     //Metodo que busca as tarefas pelo nome que ainda não foram finalizadas
-    private Tarefa getTarefaNoFinalized (String tarefaName){
+    public Tarefa getTarefaNoFinalized (String tarefaName){
 
         try (Connection con = conexao.getConnection(); PreparedStatement stmt = con.prepareStatement(SQL_SELECT_NAME_NO_FINALIZED)){
             stmt.setString(1,tarefaName);

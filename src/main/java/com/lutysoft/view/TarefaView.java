@@ -1,10 +1,31 @@
 package com.lutysoft.view;
 
+import com.lutysoft.controller.TarefaController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class TarefaView extends JFrame {
+    //Injeção do controller
+    private final TarefaController tarefaController;
 
+    //Botoes
+    private JButton btnNova;
+    private JButton btnAlterar;
+    private JButton btnExcluir;
+    private JButton btnOk;
+    private JButton btnIniciar;
+    private JButton btnFinalizar;
+
+    //Text
+    private JTextField txtIdTarefa;
+    private JTextField txtNome;
+    private JTextArea txtDescricao;
+
+    //Label de Consulta
+    private JLabel lblStatus;
+
+    private JButton btnCancelar;
     // --- Cores do Tema Dark (Mantidas para uso específico, mas as bases estão no UIManager) ---
     private static final Color COR_FUNDO_DARK = new Color(30, 30, 30);
     private static final Color COR_PAINEL_DARK = new Color(45, 45, 45);
@@ -26,9 +47,6 @@ public class TarefaView extends JFrame {
     private static final String GERENCIADOR_TAREFAS = "GerenciadorTarefas";
     private static final String RELATORIOS = "Relatorios";
 
-    // Componentes para acesso
-    private JTextField txtIdTarefa;
-    private JLabel lblStatus;
 
     public TarefaView() {
         super("Gerenciador de Tarefas CRUD");
@@ -73,6 +91,48 @@ public class TarefaView extends JFrame {
         SwingUtilities.updateComponentTreeUI(this);
 
         setVisible(true);
+        this.tarefaController = new TarefaController(this);
+        events();
+        layoutPadrao();
+    }
+
+    public void layoutPadrao(){
+        btnNova.setEnabled(true);
+        btnNova.setVisible(true);
+        btnAlterar.setEnabled(false);
+        btnAlterar.setVisible(true);
+        btnExcluir.setEnabled(false);
+        btnExcluir.setVisible(true);
+        btnIniciar.setEnabled(false);
+        btnFinalizar.setEnabled(false);
+        txtNome.setEnabled(false);
+        txtDescricao.setEnabled(false);
+        txtIdTarefa.setEnabled(true);
+        txtIdTarefa.setFocusable(true);
+        lblStatus.setVisible(true);
+
+        txtIdTarefa.setText("");
+        txtNome.setText("");
+        txtDescricao.setText("");
+
+
+        btnOk.setVisible(false);
+        btnCancelar.setVisible(false);
+        //btnIniciar.setVisible(false);
+        //btnFinalizar.setVisible(false);
+    }
+
+    public void events(){
+
+        btnNova.addActionListener(tarefaController);
+        btnAlterar.addActionListener(tarefaController);
+        btnExcluir.addActionListener(tarefaController);
+        btnOk.addActionListener(tarefaController);
+        btnCancelar.addActionListener(tarefaController);
+        btnIniciar.addActionListener(tarefaController);
+        btnFinalizar.addActionListener(tarefaController);
+        txtIdTarefa.addActionListener(tarefaController);
+
     }
 
     /**
@@ -139,7 +199,7 @@ public class TarefaView extends JFrame {
         JMenu menuRelatorios = new JMenu("Relatórios");
         menuRelatorios.setForeground(COR_TEXTO_CLARO);
 
-        JMenuItem itemRelatoriosTarefas = new JMenuItem("Relatórios por Tarefas");
+        JMenuItem itemRelatoriosTarefas = new JMenuItem("Relatório por tarefas");
         itemRelatoriosTarefas.addActionListener(e -> cardLayout.show(cardPanel, RELATORIOS));
 
         menuRelatorios.add(itemRelatoriosTarefas);
@@ -196,11 +256,12 @@ public class TarefaView extends JFrame {
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         painelBotoes.setBackground(COR_PAINEL_DARK);
 
-        JButton btnNova = new JButton("Nova Tarefa");
-        JButton btnAlterar = new JButton("Alterar");
-        JButton btnExcluir = new JButton("Excluir");
-        JButton btnOk = new JButton("Ok");
-        JButton btnCancelar = new JButton("Cancelar");
+        btnNova = new JButton("Nova Tarefa");
+        btnAlterar = new JButton("Alterar");
+        btnExcluir = new JButton("Excluir");
+        btnOk = new JButton("Salvar Tarefa");
+        btnCancelar = new JButton("Cancelar");
+
 
         // Aplica cores de ação
         btnOk.setBackground(COR_OK);
@@ -209,13 +270,13 @@ public class TarefaView extends JFrame {
         btnCancelar.setBackground(COR_CANCELAR);
         btnCancelar.setForeground(COR_TEXTO_CLARO);
 
-        btnNova.setBackground(COR_PADRAO_ESCURA);
-        btnNova.setForeground(COR_TEXTO_CLARO);
+        btnNova.setBackground(COR_INICIAR);
+        btnNova.setForeground(COR_TEXTO_ESCURO);
 
-        btnAlterar.setBackground(COR_PADRAO_ESCURA);
+        btnAlterar.setBackground(COR_FINALIZAR);
         btnAlterar.setForeground(COR_TEXTO_CLARO);
 
-        btnExcluir.setBackground(COR_PADRAO_ESCURA);
+        btnExcluir.setBackground(COR_CANCELAR);
         btnExcluir.setForeground(COR_TEXTO_CLARO);
 
 
@@ -240,7 +301,7 @@ public class TarefaView extends JFrame {
         lblId.setFont(lblId.getFont().deriveFont(Font.BOLD, 14f));
         painelId.add(lblId);
 
-        JTextField txtIdTarefa = new JTextField(5);
+        txtIdTarefa = new JTextField(5);
         txtIdTarefa.setPreferredSize(new Dimension(50, 30));
         txtIdTarefa.setCaretColor(COR_TEXTO_CLARO);
         painelId.add(txtIdTarefa);
@@ -253,7 +314,7 @@ public class TarefaView extends JFrame {
         painelStatus.setBackground(COR_PAINEL_DARK);
 
         lblStatus = new JLabel("Status: Aguardando consulta...");
-        lblStatus.setForeground(COR_TEXTO_CLARO);
+        lblStatus.setForeground(COR_INICIAR);
         lblStatus.setFont(lblStatus.getFont().deriveFont(Font.BOLD, 14f));
         painelStatus.add(lblStatus);
 
@@ -297,7 +358,7 @@ public class TarefaView extends JFrame {
         // ALTERAÇÃO: Aumentando a fonte para 16f
         lblNome.setFont(lblNome.getFont().deriveFont(Font.BOLD, 16f));
 
-        JTextField txtNome = new JTextField(20);
+        txtNome = new JTextField(20);
         txtNome.setMaximumSize(new Dimension(preferredWidth, 35));
         txtNome.setAlignmentX(Component.CENTER_ALIGNMENT);
         txtNome.setCaretColor(COR_TEXTO_CLARO);
@@ -309,7 +370,7 @@ public class TarefaView extends JFrame {
         // ALTERAÇÃO: Aumentando a fonte para 16f
         lblDescricao.setFont(lblDescricao.getFont().deriveFont(Font.BOLD, 16f));
 
-        JTextArea txtDescricao = new JTextArea(5, 30);
+        txtDescricao = new JTextArea(5, 30);
         txtDescricao.setCaretColor(COR_TEXTO_CLARO);
 
         JScrollPane scrollDescricao = new JScrollPane(txtDescricao);
@@ -325,8 +386,8 @@ public class TarefaView extends JFrame {
         painelAcoesTempo.setBackground(COR_PAINEL_DARK);
         painelAcoesTempo.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 
-        JButton btnIniciar = new JButton("Iniciar Tarefa");
-        JButton btnFinalizar = new JButton("Finalizar Tarefa");
+        btnIniciar = new JButton("Iniciar Tarefa");
+        btnFinalizar = new JButton("Finalizar Tarefa");
 
         btnIniciar.setFont(btnIniciar.getFont().deriveFont(Font.BOLD, 14f));
         btnIniciar.setBackground(COR_INICIAR);
@@ -359,6 +420,97 @@ public class TarefaView extends JFrame {
         painelFormulario.add(Box.createVerticalStrut(10));
 
         return painelFormulario;
+    }
+
+    // Get and Setters
+
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public void setBtnCancelar(JButton btnCancelar) {
+        this.btnCancelar = btnCancelar;
+    }
+
+    public JTextArea getTxtDescricao() {
+        return txtDescricao;
+    }
+
+    public void setTxtDescricao(JTextArea txtDescricao) {
+        this.txtDescricao = txtDescricao;
+    }
+
+    public JTextField getTxtNome() {
+        return txtNome;
+    }
+
+    public void setTxtNome(JTextField txtNome) {
+        this.txtNome = txtNome;
+    }
+
+    public JTextField getTxtIdTarefa() {
+        return txtIdTarefa;
+    }
+
+    public void setTxtIdTarefa(JTextField txtIdTarefa) {
+        this.txtIdTarefa = txtIdTarefa;
+    }
+
+    public JButton getBtnFinalizar() {
+        return btnFinalizar;
+    }
+
+    public void setBtnFinalizar(JButton btnFinalizar) {
+        this.btnFinalizar = btnFinalizar;
+    }
+
+    public JButton getBtnIniciar() {
+        return btnIniciar;
+    }
+
+    public void setBtnIniciar(JButton btnIniciar) {
+        this.btnIniciar = btnIniciar;
+    }
+
+    public JButton getBtnOk() {
+        return btnOk;
+    }
+
+    public void setBtnOk(JButton btnOk) {
+        this.btnOk = btnOk;
+    }
+
+    public JButton getBtnExcluir() {
+        return btnExcluir;
+    }
+
+    public void setBtnExcluir(JButton btnExcluir) {
+        this.btnExcluir = btnExcluir;
+    }
+
+    public JButton getBtnAlterar() {
+        return btnAlterar;
+    }
+
+    public void setBtnAlterar(JButton btnAlterar) {
+        this.btnAlterar = btnAlterar;
+    }
+
+    public JButton getBtnNova() {
+        return btnNova;
+    }
+
+    public void setBtnNova(JButton btnNova) {
+        this.btnNova = btnNova;
+    }
+
+    public JLabel getLblStatus() {
+        return lblStatus;
+    }
+
+    public void setLblStatus(JLabel lblStatus) {
+        this.lblStatus = lblStatus;
     }
 
     // ====================================================================
