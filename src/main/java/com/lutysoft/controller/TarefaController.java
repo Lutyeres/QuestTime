@@ -26,8 +26,14 @@ public class TarefaController implements ActionListener {
 
         tarefaView.getTxtNome().setEnabled(true);
         tarefaView.getTxtNome().setEditable(true);
+        tarefaView.getTxtNome().setFocusable(true);
+        tarefaView.getTxtNome().setText(null);
+
         tarefaView.getTxtDescricao().setEnabled(true);
         tarefaView.getTxtDescricao().setEditable(true);
+        tarefaView.getTxtDescricao().setFocusable(true);
+        tarefaView.getTxtDescricao().setText(null);
+
         tarefaView.getLblStatus().setVisible(false);
 
         tarefaView.getBtnIniciar().setEnabled(true);
@@ -38,7 +44,7 @@ public class TarefaController implements ActionListener {
         tarefaView.getBtnAlterar().setVisible(false);
         tarefaView.getBtnExcluir().setVisible(false);
 
-
+        tarefaTemp.limparTarefa();
     }
 
     private void cancelar(){
@@ -46,32 +52,36 @@ public class TarefaController implements ActionListener {
     }
 
     private void layoutBuscarPeloId(){
-        tarefaView.getBtnNova().setEnabled(false);
+        //Botao Nova Tarefa
+        tarefaView.getBtnNova().setEnabled(true);
         tarefaView.getBtnNova().setVisible(true);
+        //Botao Alterar
         tarefaView.getBtnAlterar().setEnabled(true);
         tarefaView.getBtnAlterar().setVisible(true);
+        //Botao Excluir
         tarefaView.getBtnExcluir().setEnabled(true);
         tarefaView.getBtnExcluir().setVisible(true);
+        //Desvisualizar os botoes Ok e Cancelar
         tarefaView.getBtnCancelar().setVisible(false);
         tarefaView.getBtnOk().setVisible(false);
+        //Desativar os botoes Iniciar e Finalizar Tarefa
         tarefaView.getBtnIniciar().setEnabled(false);
         tarefaView.getBtnFinalizar().setEnabled(false);
-
+        //Tonar o painel de acompanhamento visivel
         tarefaView.getLblStatus().setVisible(true);
-
+        //TextField do Nome
         tarefaView.getTxtNome().setEnabled(true);
-        tarefaView.getTxtNome().setFocusable(true);
+        tarefaView.getTxtNome().setFocusable(false);
         tarefaView.getTxtNome().setEditable(false);
-
-        //tarefaView.getTxtNome().setEnabled(true);
+        //TextField da Descrição
         tarefaView.getTxtDescricao().setEnabled(true);
-        tarefaView.getTxtDescricao().setFocusable(true);
+        tarefaView.getTxtDescricao().setFocusable(false);
         tarefaView.getTxtDescricao().setEditable(false);
-
+        //TextField do ID
         tarefaView.getTxtIdTarefa().setEnabled(true);
         tarefaView.getTxtIdTarefa().setFocusable(true);
         tarefaView.getTxtIdTarefa().setEditable(true);
-        buscarPeloId();
+        //buscarPeloId();
 
     }
 
@@ -172,6 +182,8 @@ public class TarefaController implements ActionListener {
             tarefaTemp = tarefaDao.getTarefaNoFinalized(tarefaTemp.getNome());
             tarefaView.getTxtIdTarefa().setText(Integer.toString(tarefaTemp.getId()));
             buscarPeloId();
+
+
         }
         else{
 

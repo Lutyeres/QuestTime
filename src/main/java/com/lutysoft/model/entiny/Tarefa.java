@@ -21,6 +21,14 @@ public class Tarefa {
         this.obs = obs;
     }
 
+    public void limparTarefa(){
+        setId(0);
+        setNome(null);
+        setObs(null);
+        setDataHorarioInicio(null);
+        setDataHorarioFinal(null);
+    }
+
     public LocalDateTime getDataHorarioInicio() {
         return dataHorarioInicio;
     }
