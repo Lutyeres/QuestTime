@@ -156,9 +156,11 @@ public class TarefaController implements ActionListener {
 
     private void finalizarTarefa(){
         TarefaDao tarefaDao = new TarefaDao();
+        System.out.println(String.format("ID: %s\nNome: %s\nDescrição: %s\nInico da Tarefa: %s\nFinalização da Tarefa: %s\n-------------", tarefaTemp.getId(),tarefaTemp.getNome(),tarefaTemp.getObs(),tarefaTemp.getDataHorarioInicio(),tarefaTemp.getDataHorarioFinal()));
         tarefaTemp = tarefaDao.getTarefaId(Integer.parseInt(tarefaView.getTxtIdTarefa().getText()));
+        System.out.println(String.format("ID: %s\nNome: %s\nDescrição: %s\nInico da Tarefa: %s\nFinalização da Tarefa: %s\n-------------", tarefaTemp.getId(),tarefaTemp.getNome(),tarefaTemp.getObs(),tarefaTemp.getDataHorarioInicio(),tarefaTemp.getDataHorarioFinal()));
         tarefaTemp.setDataHorarioFinal(horaAgora.now());
-        System.out.println(tarefaTemp.getDataHorarioFinal());
+        System.out.println(String.format("ID: %s\nNome: %s\nDescrição: %s\nInico da Tarefa: %s\nFinalização da Tarefa: %s\n-------------", tarefaTemp.getId(),tarefaTemp.getNome(),tarefaTemp.getObs(),tarefaTemp.getDataHorarioInicio(),tarefaTemp.getDataHorarioFinal()));
         tarefaView.getBtnFinalizar().setEnabled(false);
 
     }
