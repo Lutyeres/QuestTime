@@ -22,7 +22,7 @@ public class TarefaDao {
     }
 
     private static final String SQL_INSERT_INICIO = "INSERT INTO tarefa(tarefaNome,tarefaObs,tarefaDataHoraInicio) values (?,?,?)";
-    private static final String SQL_UPDATE_FIM = "UPDATE tarefa SET tarefaDataHoraFinal = ?, taferaNome = ?, tarefaObs = ? WHERE idTarefa = ?";
+    private static final String SQL_UPDATE_FIM = "UPDATE tarefa SET tarefaDataHoraFinal = ?, tarefaNome = ?, tarefaObs = ? WHERE idTarefa = ?";
     private static final String SQL_UPDATE_TAREFA = "UPDATE tarefa SET tarefaNome = ?, tarefaObs = ? WHERE idTarefa = ?  ";
     private static final String SQL_DELETE = "DELETE FROM tarefa WHERE idTarefa = ?";
     private static final String SQL_SELECT_ID = "SELECT * FROM tarefa WHERE idTarefa = ?";

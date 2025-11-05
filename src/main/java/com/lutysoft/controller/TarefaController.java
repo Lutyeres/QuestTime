@@ -176,15 +176,13 @@ public class TarefaController implements ActionListener {
             tarefaTemp.setNome(tarefaView.getTxtNome().getText());
             tarefaTemp.setObs(tarefaView.getTxtDescricao().getText());
 
-            tarefaDao.create(tarefaTemp);
-
-            JOptionPane.showMessageDialog(null,"Tarefa adicionada com sucesso",null,JOptionPane.INFORMATION_MESSAGE);
-
+            String message = tarefaDao.create(tarefaTemp);
+            System.out.println(message);
+            JOptionPane.showMessageDialog(null,message,null,JOptionPane.INFORMATION_MESSAGE);
             layoutBuscarPeloId();
             tarefaTemp = tarefaDao.getTarefaNoFinalized(tarefaTemp.getNome());
             tarefaView.getTxtIdTarefa().setText(Integer.toString(tarefaTemp.getId()));
             buscarPeloId();
-
 
         }
         else{
@@ -193,14 +191,14 @@ public class TarefaController implements ActionListener {
             tarefaTemp.setNome(tarefaView.getTxtNome().getText());
             tarefaTemp.setObs(tarefaView.getTxtDescricao().getText());
             //Teste pra ver qual a hora que finalizou a tarefa antes de salvar
-            System.out.println(tarefaTemp.getDataHorarioFinal());
-            tarefaDao.create(tarefaTemp);
-            JOptionPane.showMessageDialog(null,"Tarefa atualizada com sucesso",null,JOptionPane.INFORMATION_MESSAGE);
-
+            String message = tarefaDao.create(tarefaTemp);
+            System.out.println(message);
+            JOptionPane.showMessageDialog(null,message,null,JOptionPane.INFORMATION_MESSAGE);
             layoutBuscarPeloId();
             tarefaTemp = tarefaDao.getTarefaId(Integer.parseInt(tarefaView.getTxtIdTarefa().getText()));
             tarefaView.getTxtIdTarefa().setText(Integer.toString(tarefaTemp.getId()));
             buscarPeloId();
+            System.out.println(String.format("ID: %s\nNome: %s\nDescrição: %s\nInico da Tarefa: %s\nFinalização da Tarefa: %s\n-------------", tarefaTemp.getId(),tarefaTemp.getNome(),tarefaTemp.getObs(),tarefaTemp.getDataHorarioInicio(),tarefaTemp.getDataHorarioFinal()));
         }
 
 
