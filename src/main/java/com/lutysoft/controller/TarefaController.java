@@ -207,7 +207,7 @@ public class TarefaController implements ActionListener {
         TarefaDao tarefaDao = new TarefaDao();
         String message = tarefaDao.delete(tarefaTemp);
         JOptionPane.showMessageDialog(null,message,null,JOptionPane.INFORMATION_MESSAGE);
-
+        tarefaView.layoutPadrao();
 
     }
 
