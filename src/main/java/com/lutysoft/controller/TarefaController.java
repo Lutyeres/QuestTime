@@ -200,10 +200,13 @@ public class TarefaController implements ActionListener {
             buscarPeloId();
             System.out.println(String.format("ID: %s\nNome: %s\nDescrição: %s\nInico da Tarefa: %s\nFinalização da Tarefa: %s\n-------------", tarefaTemp.getId(),tarefaTemp.getNome(),tarefaTemp.getObs(),tarefaTemp.getDataHorarioInicio(),tarefaTemp.getDataHorarioFinal()));
         }
+    }
 
-
-
-
+    private void excluir(){
+        System.out.println(String.format("ID: %s\nNome: %s\nDescrição: %s\nInico da Tarefa: %s\nFinalização da Tarefa: %s\n-------------", tarefaTemp.getId(),tarefaTemp.getNome(),tarefaTemp.getObs(),tarefaTemp.getDataHorarioInicio(),tarefaTemp.getDataHorarioFinal()));
+        TarefaDao tarefaDao = new TarefaDao();
+        String message = tarefaDao.delete(tarefaTemp);
+        JOptionPane.showMessageDialog(null,message,null,JOptionPane.INFORMATION_MESSAGE);
 
 
     }
@@ -241,6 +244,9 @@ public class TarefaController implements ActionListener {
                     break;
                 case "finalizar tarefa":
                     finalizarTarefa();
+                    break;
+                case "excluir":
+                    excluir();
                     break;
             }
         }

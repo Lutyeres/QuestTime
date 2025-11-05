@@ -102,7 +102,7 @@ public class TarefaDao {
             stmt.setInt(1, tarefa.getId());
 
             int resultado = stmt.executeUpdate();
-            return resultado == 1 ? "Tarefa excluída com sucessor" : "Não foi possivel excluir essa tarefa!";
+            return resultado == 1 ? "Tarefa excluída com sucesso!" : "Não foi possivel excluir essa tarefa!";
 
         }catch (SQLException e){
             return String.format("ERROR: %s", e.getMessage());
