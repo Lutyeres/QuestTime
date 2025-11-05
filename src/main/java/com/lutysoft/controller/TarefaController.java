@@ -44,7 +44,9 @@ public class TarefaController implements ActionListener {
         tarefaView.getBtnAlterar().setVisible(false);
         tarefaView.getBtnExcluir().setVisible(false);
 
-        tarefaTemp.limparTarefa();
+        if(tarefaTemp != null){
+            tarefaTemp.limparTarefa();
+        }
     }
 
     private void cancelar(){
@@ -141,7 +143,8 @@ public class TarefaController implements ActionListener {
 
             }
         }else{
-            System.out.println("Error");
+            JOptionPane.showMessageDialog(null,"A tarefa ainda foi criada!",null,JOptionPane.INFORMATION_MESSAGE);
+            //tarefaView.layoutPadrao();
         }
 
 
@@ -221,8 +224,12 @@ public class TarefaController implements ActionListener {
         System.out.println(btnAcaoComando);
 
         if(source == tarefaView.getTxtIdTarefa() && tarefaView.getTxtIdTarefa().getText() != null){
-            layoutBuscarPeloId();
             buscarPeloId();
+            if(tarefaTemp != null){
+                layoutBuscarPeloId();
+            }else{
+                tarefaView.layoutPadrao();
+            }
         }else {
 
             switch (btnAcaoComando) {
