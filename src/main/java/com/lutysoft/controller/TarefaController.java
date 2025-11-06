@@ -46,6 +46,8 @@ public class TarefaController implements ActionListener {
 
         if(tarefaTemp != null){
             tarefaTemp.limparTarefa();
+        }else{
+            tarefaTemp = new Tarefa();
         }
     }
 
@@ -100,9 +102,11 @@ public class TarefaController implements ActionListener {
         tarefaView.getTxtNome().setEnabled(true);
         tarefaView.getTxtNome().setVisible(true);
         tarefaView.getTxtNome().setFocusable(true);
+        tarefaView.getTxtNome().setEditable(true);
         tarefaView.getTxtDescricao().setEnabled(true);
         tarefaView.getTxtDescricao().setVisible(true);
         tarefaView.getTxtDescricao().setFocusable(true);
+        tarefaView.getTxtDescricao().setEditable(true);
         TarefaDao tarefaDao = new TarefaDao();
         tarefaTemp = tarefaDao.getTarefaId(Integer.parseInt(tarefaView.getTxtIdTarefa().getText()));
         tarefaView.getTxtNome().setText(tarefaTemp.getNome());
@@ -178,14 +182,19 @@ public class TarefaController implements ActionListener {
             tarefaTemp.setId(0);
             tarefaTemp.setNome(tarefaView.getTxtNome().getText());
             tarefaTemp.setObs(tarefaView.getTxtDescricao().getText());
+            if(tarefaTemp.getDataHorarioInicio() != null) {
+                String message = tarefaDao.create(tarefaTemp);
+                System.out.println(message);
+                JOptionPane.showMessageDialog(null, message, null, JOptionPane.INFORMATION_MESSAGE);
+                layoutBuscarPeloId();
+                tarefaTemp = tarefaDao.getTarefaNoFinalized(tarefaTemp.getNome());
+                tarefaView.getTxtIdTarefa().setText(Integer.toString(tarefaTemp.getId()));
+                buscarPeloId();
+            }else{
+                String message = tarefaDao.create(tarefaTemp);
+                JOptionPane.showMessageDialog(null, "Inicie a tarefa antes de salva-la\n" + message, null, JOptionPane.INFORMATION_MESSAGE);
 
-            String message = tarefaDao.create(tarefaTemp);
-            System.out.println(message);
-            JOptionPane.showMessageDialog(null,message,null,JOptionPane.INFORMATION_MESSAGE);
-            layoutBuscarPeloId();
-            tarefaTemp = tarefaDao.getTarefaNoFinalized(tarefaTemp.getNome());
-            tarefaView.getTxtIdTarefa().setText(Integer.toString(tarefaTemp.getId()));
-            buscarPeloId();
+            }
 
         }
         else{
@@ -193,7 +202,7 @@ public class TarefaController implements ActionListener {
             tarefaTemp.setId(Integer.parseInt(idStr));
             tarefaTemp.setNome(tarefaView.getTxtNome().getText());
             tarefaTemp.setObs(tarefaView.getTxtDescricao().getText());
-            //Teste pra ver qual a hora que finalizou a tarefa antes de salvar
+
             String message = tarefaDao.create(tarefaTemp);
             System.out.println(message);
             JOptionPane.showMessageDialog(null,message,null,JOptionPane.INFORMATION_MESSAGE);
@@ -210,6 +219,7 @@ public class TarefaController implements ActionListener {
         TarefaDao tarefaDao = new TarefaDao();
         String message = tarefaDao.delete(tarefaTemp);
         JOptionPane.showMessageDialog(null,message,null,JOptionPane.INFORMATION_MESSAGE);
+        System.out.println(String.format("ID: %s\nNome: %s\nDescrição: %s\nInico da Tarefa: %s\nFinalização da Tarefa: %s\n-------------", tarefaTemp.getId(),tarefaTemp.getNome(),tarefaTemp.getObs(),tarefaTemp.getDataHorarioInicio(),tarefaTemp.getDataHorarioFinal()));
         tarefaView.layoutPadrao();
 
     }

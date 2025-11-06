@@ -8,7 +8,8 @@ import java.awt.*;
 public class TarefaView extends JFrame {
     //Injeção do controller
     private final TarefaController tarefaController;
-
+    //Injeção view Relatorio
+    private RelatorioView relatorioView;
     //Botoes
     private JButton btnNova;
     private JButton btnAlterar;
@@ -49,7 +50,7 @@ public class TarefaView extends JFrame {
 
 
     public TarefaView() {
-        super("Gerenciador de Tarefas CRUD");
+        super("QuestTime");
 
         // 1. APLICA O TEMA DARK DO NIMBUS
         aplicarTemaNimbusDark();
@@ -81,8 +82,9 @@ public class TarefaView extends JFrame {
         cardPanel = new JPanel(cardLayout);
         cardPanel.setBackground(COR_FUNDO_DARK);
 
+        relatorioView = new RelatorioView();
         cardPanel.add(criarPainelGerenciador(), GERENCIADOR_TAREFAS);
-        cardPanel.add(criarPainelRelatorios(), RELATORIOS);
+        cardPanel.add(relatorioView, RELATORIOS);
 
         add(cardPanel, BorderLayout.CENTER);
         cardLayout.show(cardPanel, GERENCIADOR_TAREFAS);
@@ -208,17 +210,6 @@ public class TarefaView extends JFrame {
         setJMenuBar(menuBar);
     }
 
-    // ====================================================================
-    // II. TELA DE RELATÓRIOS
-    // ====================================================================
-    private JPanel criarPainelRelatorios() {
-        JPanel painel = new JPanel();
-        painel.setBackground(COR_PAINEL_DARK);
-        JLabel lbl = new JLabel("Tela de Relatórios em construção.");
-        lbl.setForeground(COR_TEXTO_CLARO);
-        painel.add(lbl);
-        return painel;
-    }
 
     // ====================================================================
     // III. TELA GERENCIADOR DE TAREFAS
