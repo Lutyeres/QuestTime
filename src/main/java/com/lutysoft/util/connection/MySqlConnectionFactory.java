@@ -1,13 +1,14 @@
 package com.lutysoft.util.connection;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySqlConnectionFactory implements ConnectionFactory {
 
-    private final String usuario = "root";
-    private final String senha = "";
+    private final String usuario = "redehome";
+    private final String senha = "Usuario24savyo!";
     private final String url = "jdbc:mysql://localhost:3306/questtime?serverTimezone=UTC";
     private Connection connection;
 
@@ -20,10 +21,12 @@ public class MySqlConnectionFactory implements ConnectionFactory {
             System.out.println("Conexão bem sucedida!");
             return connection;
         }catch (SQLException sql){
-            System.out.println("Houve um erro no SQL:sqlexception sql-" + sql);
+            JOptionPane.showMessageDialog(null, "Houve um erro no SQL: sqlexception sql\n"+sql);
+            //System.out.println("Houve um erro no SQL:sqlexception sql-" + sql);
             return null;
         } catch (ClassNotFoundException cnf) {
-            System.out.println("Houve um erro no DRIVER: classnotfoundexception-" + cnf);
+            JOptionPane.showMessageDialog(null, "Houve um erro no DRIVER: classnotfoundexception\n"+cnf);
+            //System.out.println("Houve um erro no DRIVER: classnotfoundexception-" + cnf);
             return null;
         }
     }
