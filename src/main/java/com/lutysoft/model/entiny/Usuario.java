@@ -5,7 +5,7 @@ public class Usuario {
     private String nome;
     private String senha;
 
-    public Usuario(String nome) {
+    public Usuario() {
 
     }
 
