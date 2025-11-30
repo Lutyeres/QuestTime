@@ -1,12 +1,16 @@
 package com.lutysoft.app;
 
+import com.lutysoft.view.CadastroView;
+import com.lutysoft.view.LoginView;
 import com.lutysoft.view.TarefaView;
 
 
 public class Main {
     public static void main(String[] args) {
 
-        TarefaView tarefaView = new TarefaView();
+        LoginView loginView = new LoginView();
+        //CadastroView cadastroView = new CadastroView();
+        //TarefaView tarefaView = new TarefaView();
 
 
     }

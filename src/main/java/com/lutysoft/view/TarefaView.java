@@ -503,5 +503,5 @@ public class TarefaView extends JFrame {
     public void setLblStatus(JLabel lblStatus) {
         this.lblStatus = lblStatus;
     }
-    
+
 }
