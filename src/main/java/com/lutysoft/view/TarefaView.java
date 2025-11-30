@@ -503,11 +503,5 @@ public class TarefaView extends JFrame {
     public void setLblStatus(JLabel lblStatus) {
         this.lblStatus = lblStatus;
     }
-
-    // ====================================================================
-    // MAIN
-    // ====================================================================
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new TarefaView());
-    }
+    
 }
