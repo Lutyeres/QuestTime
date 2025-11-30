@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class Tarefa {
 
+    private int idUsuarioTarefa;
     private LocalDateTime dataHorarioInicio;
     private LocalDateTime dataHorarioFinal;
     private int id;
@@ -13,7 +14,8 @@ public class Tarefa {
     public Tarefa() {
     }
 
-    public Tarefa(LocalDateTime dataHorarioInicio, LocalDateTime dataHorarioFinal, int id, String nome, String obs) {
+    public Tarefa(int idUsuarioTarefa ,LocalDateTime dataHorarioInicio, LocalDateTime dataHorarioFinal, int id, String nome, String obs) {
+        this.idUsuarioTarefa = idUsuarioTarefa;
         this.dataHorarioInicio = dataHorarioInicio;
         this.dataHorarioFinal = dataHorarioFinal;
         this.id = id;
@@ -67,5 +69,13 @@ public class Tarefa {
 
     public void setObs(String obs) {
         this.obs = obs;
+    }
+
+    public int getIdUsuarioTarefa() {
+        return idUsuarioTarefa;
+    }
+
+    public void setIdUsuarioTarefa(int idUsuarioTarefa) {
+        this.idUsuarioTarefa = idUsuarioTarefa;
     }
 }

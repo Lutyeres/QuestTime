@@ -1,6 +1,7 @@
 package com.lutysoft.model.dao;
 
 import com.lutysoft.model.entiny.Tarefa;
+import com.lutysoft.model.entiny.Usuario;
 import com.lutysoft.util.connection.ConnectionFactory;
 import com.lutysoft.util.connection.MySqlConnectionFactory;
 import org.w3c.dom.ls.LSOutput;
@@ -21,12 +22,12 @@ public class TarefaDao {
         conexao = new MySqlConnectionFactory();
     }
 
-    private static final String SQL_INSERT_INICIO = "INSERT INTO tarefa(tarefaNome,tarefaObs,tarefaDataHoraInicio) values (?,?,?)";
+    private static final String SQL_INSERT_INICIO = "INSERT INTO tarefa(idUsuario,tarefaNome,tarefaObs,tarefaDataHoraInicio) values (?,?,?,?)";
     private static final String SQL_UPDATE_FIM = "UPDATE tarefa SET tarefaDataHoraFinal = ?, tarefaNome = ?, tarefaObs = ? WHERE idTarefa = ?";
     private static final String SQL_UPDATE_TAREFA = "UPDATE tarefa SET tarefaNome = ?, tarefaObs = ? WHERE idTarefa = ?  ";
     private static final String SQL_DELETE = "DELETE FROM tarefa WHERE idTarefa = ?";
     private static final String SQL_SELECT_ID = "SELECT * FROM tarefa WHERE idTarefa = ?";
-    private static final String SQL_SELECT_NAME = "SELECT * FROM tarefa WHERE tarefaNome = ?";
+    private static final String SQL_SELECT_NAME = "SELECT * FROM tarefa WHERE tarefaNome = ? AND idUsuario = ?";
     private static final String SQL_SELECT_NAME_NO_FINALIZED = "SELECT * FROM tarefa WHERE tarefaNome = ? AND tarefaDataHoraFinal IS NULL";
     private static final String SQL_SELECT_ALL_TAREFAS = "SELECT * FROM tarefa;";
 
@@ -44,9 +45,10 @@ public class TarefaDao {
 
 
         try(Connection con = conexao.getConnection(); PreparedStatement stmt = con.prepareStatement(SQL_INSERT_INICIO)){
-            stmt.setString(1, tarefa.getNome());
-            stmt.setString(2, tarefa.getObs());
-            stmt.setObject(3, tarefa.getDataHorarioInicio());
+            stmt.setInt(1,tarefa.getIdUsuarioTarefa());
+            stmt.setString(2, tarefa.getNome());
+            stmt.setString(3, tarefa.getObs());
+            stmt.setObject(4, tarefa.getDataHorarioInicio());
 
 
             int resultado = stmt.executeUpdate();
@@ -114,7 +116,8 @@ public class TarefaDao {
     private Tarefa getTarefa(ResultSet rs) throws SQLException{
         Tarefa tarefa = new Tarefa();
 
-        tarefa.setId((rs.getInt("idTarefa")));
+        tarefa.setIdUsuarioTarefa((rs.getInt("idUsuario")));
+        tarefa.setId(rs.getInt("idTarefa"));
         tarefa.setNome(rs.getString("tarefaNome"));
         tarefa.setObs(rs.getString("tarefaObs"));
         tarefa.setDataHorarioInicio(rs.getObject("tarefaDataHoraInicio", LocalDateTime.class));
@@ -147,6 +150,7 @@ public class TarefaDao {
 
         try (Connection con = conexao.getConnection(); PreparedStatement stmt = con.prepareStatement(SQL_SELECT_NAME);){
             stmt.setString(1,tarefaNome.getNome());
+            stmt.setInt(2,tarefaNome.getIdUsuarioTarefa());
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()){
