@@ -3,6 +3,7 @@ package com.lutysoft.model.entiny;
 public class Usuario {
 
     private int id;
+    private boolean active;
     private String nome;
     private String senha;
 
@@ -10,8 +11,9 @@ public class Usuario {
 
     }
 
-    public Usuario(int id, String nome, String senha) {
+    public Usuario(int id, boolean active, String nome, String senha) {
         this.id = id;
+        this.active = active;
         this.nome = nome;
         this.senha = senha;
     }
@@ -38,5 +40,13 @@ public class Usuario {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
