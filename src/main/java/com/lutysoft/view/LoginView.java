@@ -1,5 +1,7 @@
 package com.lutysoft.view;
 
+import com.lutysoft.controller.LoginController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -20,7 +22,7 @@ public class LoginView extends JFrame {
     private JButton btnCadastrar;
 
     // Injeção do Controller (Deixado para referência, como nos códigos anteriores)
-    // private LoginController loginController;
+    private final LoginController loginController;
 
     public LoginView() {
         super("Login - QuestTime");
@@ -44,10 +46,16 @@ public class LoginView extends JFrame {
         SwingUtilities.updateComponentTreeUI(this);
 
         // --- Eventos e Controller (Deixado para referência) ---
-        // this.loginController = new LoginController(this);
-        // events();
+        this.loginController = new LoginController(this);
+        events();
 
         setVisible(true);
+    }
+
+    //Escutadores
+    private void events(){
+        btnLogin.addActionListener(loginController);
+        btnCadastrar.addActionListener(loginController);
     }
 
     // Método auxiliar para aplicar o Nimbus Look and Feel

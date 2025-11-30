@@ -124,7 +124,7 @@ public class TarefaView extends JFrame {
         //btnFinalizar.setVisible(false);
     }
 
-    public void events(){
+    private void events(){
 
         btnNova.addActionListener(tarefaController);
         btnAlterar.addActionListener(tarefaController);
