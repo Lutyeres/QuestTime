@@ -9,7 +9,7 @@ public class MySqlConnectionFactory implements ConnectionFactory {
 
     private final String usuario = "rede_multlens";
     private final String senha = "Usuario24savyo!";
-    private final String url = "jdbc:mysql://localhost:3306/questtime?serverTimezone=UTC";
+    private final String url = "jdbc:mysql://192.168.1.161:3306/questtime?serverTimezone=UTC";
     private Connection connection;
 
 

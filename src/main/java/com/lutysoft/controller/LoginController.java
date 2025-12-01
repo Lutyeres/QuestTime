@@ -24,10 +24,10 @@ public class LoginController implements ActionListener {
         String usuario = loginView.getTxtUsuario().getText();
         String senha = loginView.getTxtSenha().getText();
         usuarioAtual = usuarioDAO.getUsuarioNameCadastrado(usuario);
-        System.out.println(String.format("Id: %d, Ativo?: %b,  Usuario: %s, Senha: %s", usuarioAtual.getId(),usuarioAtual.isActive(),usuarioAtual.getNome(),usuarioAtual.getSenha()));
         if(usuarioAtual == null){
             return false;
         }else{
+            System.out.println(String.format("Id: %d, Ativo?: %b,  Usuario: %s, Senha: %s", usuarioAtual.getId(),usuarioAtual.isActive(),usuarioAtual.getNome(),usuarioAtual.getSenha()));
             if(usuarioAtual.isActive()){
                 if(usuarioAtual.getNome().equals(usuario) && usuarioAtual.getSenha().equals(senha)){
                    usuarioAtual.setUsuarioLogado(usuarioAtual);
