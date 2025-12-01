@@ -1,6 +1,7 @@
 package com.lutysoft.view;
 
 import com.lutysoft.controller.LoginController;
+import com.lutysoft.model.entiny.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +24,7 @@ public class LoginView extends JFrame {
 
     // Injeção do Controller (Deixado para referência, como nos códigos anteriores)
     private final LoginController loginController;
+    public static Usuario usuarioAtual = new Usuario();
 
     public LoginView() {
         super("Login - QuestTime");

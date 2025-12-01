@@ -6,16 +6,18 @@ public class Usuario {
     private boolean active;
     private String nome;
     private String senha;
+    private static Usuario usuarioLogado;
 
     public Usuario() {
 
     }
 
-    public Usuario(int id, boolean active, String nome, String senha) {
+    public Usuario(int id, boolean active, String nome, String senha, Usuario usuarioLogado) {
         this.id = id;
         this.active = active;
         this.nome = nome;
         this.senha = senha;
+        this.usuarioLogado = usuarioLogado;
     }
 
     public String getNome() {
@@ -48,5 +50,13 @@ public class Usuario {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public static Usuario getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
+    public static void setUsuarioLogado(Usuario usuarioLogado) {
+        Usuario.usuarioLogado = usuarioLogado;
     }
 }

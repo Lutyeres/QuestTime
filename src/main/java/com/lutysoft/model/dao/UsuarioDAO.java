@@ -102,8 +102,9 @@ public class UsuarioDAO {
         Usuario usuario = new Usuario();
 
         usuario.setId(rs.getInt("idUsuario"));
+        usuario.setActive(rs.getBoolean("usuarioActive"));
         usuario.setNome(rs.getString("usuarioName"));
-        usuario.setSenha("usuarioPassword");
+        usuario.setSenha(rs.getString("usuarioPassword"));
 
         return usuario;
     }

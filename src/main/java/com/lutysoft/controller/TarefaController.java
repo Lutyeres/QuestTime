@@ -2,6 +2,8 @@ package com.lutysoft.controller;
 
 import com.lutysoft.model.dao.TarefaDao;
 import com.lutysoft.model.entiny.Tarefa;
+import com.lutysoft.model.entiny.Usuario;
+import com.lutysoft.view.LoginView;
 import com.lutysoft.view.TarefaView;
 
 import javax.swing.*;
@@ -180,6 +182,7 @@ public class TarefaController implements ActionListener {
         if(idStr == null || idStr.trim().isEmpty()) {
 
             tarefaTemp.setId(0);
+            tarefaTemp.setIdUsuarioTarefa(Usuario.getUsuarioLogado().getId());
             tarefaTemp.setNome(tarefaView.getTxtNome().getText());
             tarefaTemp.setObs(tarefaView.getTxtDescricao().getText());
             if(tarefaTemp.getDataHorarioInicio() != null) {
@@ -200,6 +203,7 @@ public class TarefaController implements ActionListener {
         else{
 
             tarefaTemp.setId(Integer.parseInt(idStr));
+            tarefaTemp.setIdUsuarioTarefa(Usuario.getUsuarioLogado().getId());
             tarefaTemp.setNome(tarefaView.getTxtNome().getText());
             tarefaTemp.setObs(tarefaView.getTxtDescricao().getText());
 
@@ -210,7 +214,7 @@ public class TarefaController implements ActionListener {
             tarefaTemp = tarefaDao.getTarefaId(Integer.parseInt(tarefaView.getTxtIdTarefa().getText()));
             tarefaView.getTxtIdTarefa().setText(Integer.toString(tarefaTemp.getId()));
             buscarPeloId();
-            System.out.println(String.format("ID: %s\nNome: %s\nDescrição: %s\nInico da Tarefa: %s\nFinalização da Tarefa: %s\n-------------", tarefaTemp.getId(),tarefaTemp.getNome(),tarefaTemp.getObs(),tarefaTemp.getDataHorarioInicio(),tarefaTemp.getDataHorarioFinal()));
+            System.out.println(String.format("ID Usuario: %d\nID: %s\nNome: %s\nDescrição: %s\nInico da Tarefa: %s\nFinalização da Tarefa: %s\n-------------",tarefaTemp.getIdUsuarioTarefa(), tarefaTemp.getId(),tarefaTemp.getNome(),tarefaTemp.getObs(),tarefaTemp.getDataHorarioInicio(),tarefaTemp.getDataHorarioFinal()));
         }
     }
 
@@ -244,6 +248,7 @@ public class TarefaController implements ActionListener {
 
             switch (btnAcaoComando) {
                 case "nova tarefa":
+                    System.out.println(Usuario.getUsuarioLogado().getNome());
                     layoutNovaTarefa();
                     break;
                 case "cancelar":
