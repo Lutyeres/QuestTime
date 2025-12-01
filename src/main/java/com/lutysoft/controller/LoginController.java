@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 public class LoginController implements ActionListener {
 
     private final LoginView loginView;
-    public Usuario usuarioAtual = new Usuario();
+    public static Usuario usuarioAtual = new Usuario();
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     public LoginController(LoginView loginView) {
@@ -30,7 +30,7 @@ public class LoginController implements ActionListener {
         }else{
             if(usuarioAtual.isActive()){
                 if(usuarioAtual.getNome().equals(usuario) && usuarioAtual.getSenha().equals(senha)){
-                   Usuario.setUsuarioLogado(usuarioAtual);
+                   usuarioAtual.setUsuarioLogado(usuarioAtual);
                    return true;
                 }else{
                     return false;

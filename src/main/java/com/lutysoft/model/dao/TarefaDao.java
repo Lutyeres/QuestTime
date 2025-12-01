@@ -29,7 +29,7 @@ public class TarefaDao {
     private static final String SQL_SELECT_ID = "SELECT * FROM tarefa WHERE idTarefa = ?";
     private static final String SQL_SELECT_NAME = "SELECT * FROM tarefa WHERE tarefaNome = ? AND idUsuario = ?";
     private static final String SQL_SELECT_NAME_NO_FINALIZED = "SELECT * FROM tarefa WHERE tarefaNome = ? AND tarefaDataHoraFinal IS NULL";
-    private static final String SQL_SELECT_ALL_TAREFAS = "SELECT * FROM tarefa;";
+    private static final String SQL_SELECT_ALL_TAREFAS = "SELECT * FROM tarefa WHERE idUsuario = ?;";
 
     //Metodo que vai decidir se vai salvar ou atualizar a tarefa
     public String create(Tarefa tarefa) {
@@ -185,7 +185,7 @@ public class TarefaDao {
         List<Tarefa> tarefas = new ArrayList<>();
 
         try(Connection con = conexao.getConnection(); PreparedStatement stmt = con.prepareStatement(SQL_SELECT_ALL_TAREFAS)){
-
+            stmt.setInt(1, Usuario.getUsuarioLogado().getId());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
                 tarefas.add(getTarefa(rs));
