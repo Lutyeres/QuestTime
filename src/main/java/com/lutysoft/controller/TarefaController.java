@@ -149,7 +149,7 @@ public class TarefaController implements ActionListener {
 
             }
         }else{
-            JOptionPane.showMessageDialog(null,"A tarefa ainda foi criada!",null,JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Tarefa não encontrada!",null,JOptionPane.INFORMATION_MESSAGE);
             //tarefaView.layoutPadrao();
         }
 

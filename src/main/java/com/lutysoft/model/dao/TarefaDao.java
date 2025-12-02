@@ -26,7 +26,7 @@ public class TarefaDao {
     private static final String SQL_UPDATE_FIM = "UPDATE tarefa SET tarefaDataHoraFinal = ?, tarefaNome = ?, tarefaObs = ? WHERE idTarefa = ?";
     private static final String SQL_UPDATE_TAREFA = "UPDATE tarefa SET tarefaNome = ?, tarefaObs = ? WHERE idTarefa = ?  ";
     private static final String SQL_DELETE = "DELETE FROM tarefa WHERE idTarefa = ?";
-    private static final String SQL_SELECT_ID = "SELECT * FROM tarefa WHERE idTarefa = ?";
+    private static final String SQL_SELECT_ID = "SELECT * FROM tarefa WHERE idTarefa = ? AND idUsuario = ?";
     private static final String SQL_SELECT_NAME = "SELECT * FROM tarefa WHERE tarefaNome = ? AND idUsuario = ?";
     private static final String SQL_SELECT_NAME_NO_FINALIZED = "SELECT * FROM tarefa WHERE tarefaNome = ? AND tarefaDataHoraFinal IS NULL";
     private static final String SQL_SELECT_ALL_TAREFAS = "SELECT * FROM tarefa WHERE idUsuario = ?;";
@@ -132,6 +132,7 @@ public class TarefaDao {
 
         try (Connection con = conexao.getConnection(); PreparedStatement stmt = con.prepareStatement(SQL_SELECT_ID)){
             stmt.setInt(1,idtarefa);
+            stmt.setInt(2, Usuario.getUsuarioLogado().getId());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
                 return getTarefa(rs);

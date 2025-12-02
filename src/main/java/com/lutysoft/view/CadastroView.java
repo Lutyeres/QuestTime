@@ -1,5 +1,7 @@
 package com.lutysoft.view;
 
+import com.lutysoft.controller.CadastroController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,6 +21,8 @@ public class CadastroView extends JFrame {
     private JPasswordField txtConfirmaSenha;
     private JButton btnCadastrar;
     private JButton btnCancelar;
+
+    private final CadastroController cadastroController;
 
     public CadastroView() {
         super("Cadastro de Usuário - QuestTime");
@@ -40,6 +44,14 @@ public class CadastroView extends JFrame {
         SwingUtilities.updateComponentTreeUI(this);
 
         setVisible(true);
+
+        this.cadastroController = new CadastroController(this);
+        events();
+    }
+
+    private void events(){
+        btnCadastrar.addActionListener(cadastroController);
+        btnCancelar.addActionListener(cadastroController);
     }
 
     // Método auxiliar para aplicar o Nimbus Look and Feel
